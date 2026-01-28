@@ -1,0 +1,5 @@
+{
+  "name": "Copy of VetAcademy",
+  "description": "Uma plataforma educacional avançada para veterinários, apresentando timers de RCP baseados no protocolo RECOVER, calculadoras de emergência e recursos educacionais.",
+  "requestFramePermissions": ["microphone"]
+}

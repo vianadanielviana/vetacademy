@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VetAcademy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Configuração do Tailwind para usar as CSS Variables
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              border: "hsl(var(--border))",
+              input: "hsl(var(--input))",
+              ring: "hsl(var(--ring))",
+              background: "hsl(var(--background))",
+              foreground: "hsl(var(--foreground))",
+              primary: {
+                DEFAULT: "hsl(var(--primary))",
+                foreground: "hsl(var(--primary-foreground))",
+              },
+              secondary: {
+                DEFAULT: "hsl(var(--secondary))",
+                foreground: "hsl(var(--secondary-foreground))",
+              },
+              destructive: {
+                DEFAULT: "hsl(var(--destructive))",
+                foreground: "hsl(var(--destructive-foreground))",
+              },
+              muted: {
+                DEFAULT: "hsl(var(--muted))",
+                foreground: "hsl(var(--muted-foreground))",
+              },
+              accent: {
+                DEFAULT: "hsl(var(--accent))",
+                foreground: "hsl(var(--accent-foreground))",
+              },
+              popover: {
+                DEFAULT: "hsl(var(--popover))",
+                foreground: "hsl(var(--popover-foreground))",
+              },
+              card: {
+                DEFAULT: "hsl(var(--card))",
+                foreground: "hsl(var(--card-foreground))",
+              },
+            },
+            borderRadius: {
+              lg: "var(--radius)",
+              md: "calc(var(--radius) - 2px)",
+              sm: "calc(var(--radius) - 4px)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rubik:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ═══════════════════════════════════════════════════════════════════════════
+         VetAcademy Design System - LOVABLE EXACT MATCH
+         Todas as cores são HSL para consistência
+         ═══════════════════════════════════════════════════════════════════════════ */
+
+      :root {
+        /* CORES DE FUNDO */
+        --background: 270 60% 10%;
+        --foreground: 0 0% 100%;
+
+        /* CARDS E POPOVERS */
+        --card: 270 50% 15%;
+        --card-foreground: 0 0% 100%;
+        --popover: 270 50% 15%;
+        --popover-foreground: 0 0% 100%;
+
+        /* CORES PRIMÁRIAS (Roxo vibrante) */
+        --primary: 270 50% 50%;
+        --primary-foreground: 0 0% 100%;
+
+        /* CORES SECUNDÁRIAS (Rosa/Magenta) */
+        --secondary: 320 70% 60%;
+        --secondary-foreground: 0 0% 100%;
+
+        /* CORES AUXILIARES */
+        --muted: 270 30% 25%;
+        --muted-foreground: 270 10% 70%;
+        --accent: 320 70% 60%;
+        --accent-foreground: 0 0% 100%;
+
+        /* CORES DE ESTADO */
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 100%;
+
+        /* BORDAS E INPUTS */
+        --border: 270 30% 30%;
+        --input: 270 30% 25%;
+        --ring: 270 50% 60%;
+
+        /* BORDER RADIUS */
+        --radius: 1rem;
+
+        /* GRADIENTES */
+        --gradient-primary: linear-gradient(
+          135deg,
+          hsl(270, 60%, 10%) 0%,
+          hsl(280, 50%, 15%) 50%,
+          hsl(290, 40%, 12%) 100%
+        );
+        --gradient-button: linear-gradient(
+          135deg,
+          hsl(270, 50%, 50%) 0%,
+          hsl(320, 70%, 60%) 100%
+        );
+
+        /* SOMBRAS */
+        --shadow-glow: 0 8px 32px 0 rgba(139, 92, 246, 0.3);
+        --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      }
+
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      .font-rubik {
+        font-family: "Rubik", sans-serif;
+      }
+
+      /* Main content gradient - LOVABLE EXACT (extraído do CSS compilado) */
+      .gradient-primary {
+        background: linear-gradient(
+          135deg,
+          rgb(89, 36, 143) 0%,
+          rgb(138, 46, 184) 50%,
+          rgb(217, 38, 157) 100%
+        );
+      }
+
+      .gradient-button {
+        background: linear-gradient(
+          90deg,
+          hsl(280 60% 50%) 0%,
+          hsl(320 70% 60%) 100%
+        );
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .shadow-glow {
+        box-shadow: var(--shadow-glow);
+      }
+
+      .shadow-glass {
+        box-shadow: var(--shadow-glass);
+      }
+
+      /* Header - LOVABLE EXACT (semi-transparente para mostrar gradiente) */
+      .header-gradient {
+        background: rgba(38, 19, 57, 0.3);
+      }
+
+      /* Nav background - LOVABLE EXACT */
+      .nav-gradient {
+        background: rgba(38, 19, 57, 0.2);
+      }
+
+      /* Logo com borda rosa - LOVABLE EXACT */
+      .logo-circle {
+        border: 2px solid #f472b6;
+        background: hsl(270 40% 25%);
+      }
+
+      /* Tab ativa - LOVABLE EXACT */
+      .tab-active {
+        background: linear-gradient(90deg, #ec4899 0%, #f472b6 100%);
+        box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+      }
+
+      /* Tab inativa - LOVABLE EXACT */
+      .tab-inactive {
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .tab-inactive:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      /* Cor rosa/magenta para ícones - LOVABLE EXACT */
+      .icon-pink {
+        color: #f472b6;
+      }
+
+      /* Card glass effect */
+      .card-glass {
+        background: hsl(var(--card) / 0.3);
+        backdrop-filter: blur(12px);
+        border: 1px solid hsl(var(--border) / 0.5);
+        border-radius: 1rem;
+        box-shadow: var(--shadow-glass);
+      }
+
+      /* Botão primário */
+      .btn-primary {
+        background: var(--gradient-button);
+        box-shadow: var(--shadow-glow);
+        color: white;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+
+      /* Input dark */
+      .input-dark {
+        background-color: hsl(var(--input));
+        border: 1px solid hsl(var(--border));
+        color: hsl(var(--foreground));
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        transition: all 0.2s ease;
+      }
+
+      .input-dark:focus {
+        outline: none;
+        ring: 2px;
+        ring-color: hsl(var(--ring));
+      }
+
+      .input-dark::placeholder {
+        color: hsl(var(--muted-foreground));
+      }
+
+      /* Badge styles */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .badge-secondary {
+        background-color: hsl(var(--secondary) / 0.2);
+        color: hsl(var(--secondary));
+        border: 1px solid hsl(var(--secondary) / 0.3);
+      }
+
+      /* Animações */
+      .animate-in {
+        animation-duration: 150ms;
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        animation-fill-mode: both;
+      }
+
+      .fade-in {
+        animation-name: fadeIn;
+      }
+
+      .slide-in-from-left {
+        animation-name: slideInFromLeft;
+      }
+
+      .slide-in-from-bottom {
+        animation-name: slideInFromBottom;
+      }
+
+      .zoom-in-95 {
+        animation-name: zoomIn95;
+      }
+
+      .duration-200 {
+        animation-duration: 200ms;
+      }
+
+      .duration-300 {
+        animation-duration: 300ms;
+      }
+
+      .duration-500 {
+        animation-duration: 500ms;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideInFromLeft {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInFromBottom {
+        from {
+          transform: translateY(100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes zoomIn95 {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+          "react/": "https://esm.sh/react@^19.2.3/",
+          "react": "https://esm.sh/react@^19.2.3",
+          "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+          "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,376 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VetAcademy Design System - Baseado no Lovable (pet-pro-toolkit)
+   Todas as cores DEVEM ser HSL para consistência
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  :root {
+    /* ═══════════════════════════════════════════ */
+    /* CORES DE FUNDO */
+    /* ═══════════════════════════════════════════ */
+    --background: 270 60% 10%; /* Roxo escuro profundo */
+    --foreground: 0 0% 100%; /* Branco puro */
+
+    /* ═══════════════════════════════════════════ */
+    /* CARDS E POPOVERS */
+    /* ═══════════════════════════════════════════ */
+    --card: 270 50% 15%; /* Roxo escuro para cards */
+    --card-foreground: 0 0% 100%;
+
+    --popover: 270 50% 15%;
+    --popover-foreground: 0 0% 100%;
+
+    /* ═══════════════════════════════════════════ */
+    /* CORES PRIMÁRIAS (Roxo vibrante) */
+    /* ═══════════════════════════════════════════ */
+    --primary: 270 50% 50%; /* Roxo vibrante */
+    --primary-foreground: 0 0% 100%;
+
+    /* ═══════════════════════════════════════════ */
+    /* CORES SECUNDÁRIAS (Rosa/Magenta) */
+    /* ═══════════════════════════════════════════ */
+    --secondary: 320 70% 60%; /* Rosa/Magenta */
+    --secondary-foreground: 0 0% 100%;
+
+    /* ═══════════════════════════════════════════ */
+    /* CORES AUXILIARES */
+    /* ═══════════════════════════════════════════ */
+    --muted: 270 30% 25%;
+    --muted-foreground: 270 10% 70%;
+
+    --accent: 320 70% 60%; /* Igual ao secondary */
+    --accent-foreground: 0 0% 100%;
+
+    /* ═══════════════════════════════════════════ */
+    /* CORES DE ESTADO */
+    /* ═══════════════════════════════════════════ */
+    --destructive: 0 84.2% 60.2%; /* Vermelho para erros */
+    --destructive-foreground: 0 0% 100%;
+
+    /* ═══════════════════════════════════════════ */
+    /* BORDAS E INPUTS */
+    /* ═══════════════════════════════════════════ */
+    --border: 270 30% 30%;
+    --input: 270 30% 25%;
+    --ring: 270 50% 60%; /* Foco dos inputs */
+
+    /* ═══════════════════════════════════════════ */
+    /* BORDER RADIUS */
+    /* ═══════════════════════════════════════════ */
+    --radius: 1rem;
+
+    /* ═══════════════════════════════════════════ */
+    /* GRADIENTES - LOVABLE EXACT */
+    /* ═══════════════════════════════════════════ */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(270, 60%, 10%) 0%,
+      hsl(280, 50%, 15%) 50%,
+      hsl(290, 40%, 12%) 100%
+    );
+
+    --gradient-button: linear-gradient(
+      135deg,
+      hsl(270, 50%, 50%) 0%,
+      hsl(320, 70%, 60%) 100%
+    );
+
+    --gradient-glass: linear-gradient(
+      135deg,
+      rgba(139, 92, 246, 0.1) 0%,
+      rgba(219, 39, 119, 0.1) 100%
+    );
+
+    /* ═══════════════════════════════════════════ */
+    /* SOMBRAS - LOVABLE EXACT */
+    /* ═══════════════════════════════════════════ */
+    --shadow-glow: 0 8px 32px 0 rgba(139, 92, 246, 0.3);
+    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+    /* ═══════════════════════════════════════════ */
+    /* SIDEBAR (se necessário) */
+    /* ═══════════════════════════════════════════ */
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* ESTILOS BASE */
+  /* ═══════════════════════════════════════════ */
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CLASSES UTILITÁRIAS CUSTOMIZADAS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+  /* ═══════════════════════════════════════════ */
+  /* GRADIENTES */
+  /* ═══════════════════════════════════════════ */
+
+  /* Main content gradient - LOVABLE EXACT: roxo quase sólido */
+  .gradient-primary {
+    background: linear-gradient(
+      180deg,
+      hsl(270 35% 22%) 0%,
+      hsl(272 38% 28%) 60%,
+      hsl(280 42% 35%) 100%
+    );
+  }
+
+  .gradient-button {
+    background: linear-gradient(
+      90deg,
+      hsl(280 60% 50%) 0%,
+      hsl(320 70% 60%) 100%
+    );
+  }
+
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .bg-gradient-button {
+    background: var(--gradient-button);
+  }
+
+  .bg-gradient-glass {
+    background: var(--gradient-glass);
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* GLASS EFFECT */
+  /* ═══════════════════════════════════════════ */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* SOMBRAS */
+  /* ═══════════════════════════════════════════ */
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-glass {
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* HEADER - LOVABLE EXACT: roxo escuro sólido */
+  /* ═══════════════════════════════════════════ */
+  .header-gradient {
+    background: hsl(270 40% 18%);
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* LOGO - LOVABLE EXACT: círculo com borda rosa */
+  /* ═══════════════════════════════════════════ */
+  .logo-circle {
+    border: 2px solid #f472b6;
+    background: hsl(270 40% 25%);
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* TABS - LOVABLE EXACT */
+  /* ═══════════════════════════════════════════ */
+
+  /* Tab ativa com fundo rosa/pink */
+  .tab-active {
+    background: linear-gradient(90deg, #ec4899 0%, #f472b6 100%);
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+  }
+
+  /* Tab inativa com borda */
+  .tab-inactive {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .tab-inactive:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* ÍCONES - LOVABLE EXACT: rosa/magenta */
+  /* ═══════════════════════════════════════════ */
+  .icon-pink {
+    color: #f472b6;
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* CARDS - Padrão VetAcademy */
+  /* ═══════════════════════════════════════════ */
+  .card-glass {
+    @apply bg-card/30 backdrop-blur-md border border-border/50 rounded-2xl;
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* BOTÕES - Padrão VetAcademy */
+  /* ═══════════════════════════════════════════ */
+  .btn-primary {
+    @apply text-white rounded-xl px-6 py-3 font-medium;
+    background: var(--gradient-button);
+    box-shadow: var(--shadow-glow);
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    @apply bg-muted/30 text-foreground hover:bg-muted/50 backdrop-blur-sm border border-border/50 rounded-xl px-6 py-3 font-medium;
+    transition: all 0.2s ease;
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* INPUTS - Padrão VetAcademy */
+  /* ═══════════════════════════════════════════ */
+  .input-dark {
+    @apply bg-input border border-border text-foreground placeholder:text-muted-foreground rounded-lg px-4 py-3;
+    transition: all 0.2s ease;
+  }
+
+  .input-dark:focus {
+    @apply ring-2 ring-ring outline-none;
+  }
+
+  /* ═══════════════════════════════════════════ */
+  /* BADGES - Padrão VetAcademy */
+  /* ═══════════════════════════════════════════ */
+  .badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary/20 text-secondary border border-secondary/30;
+  }
+
+  .badge-primary {
+    @apply bg-primary/20 text-primary border border-primary/30;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMAÇÕES - LOVABLE STYLE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer utilities {
+  /* Animate-in classes (similar to tailwindcss-animate) */
+  .animate-in {
+    animation-duration: 150ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+  }
+
+  .fade-in {
+    animation-name: fadeIn;
+  }
+
+  .slide-in-from-left {
+    animation-name: slideInFromLeft;
+  }
+
+  .slide-in-from-bottom {
+    animation-name: slideInFromBottom;
+  }
+
+  .zoom-in-95 {
+    animation-name: zoomIn95;
+  }
+
+  .duration-200 {
+    animation-duration: 200ms;
+  }
+
+  .duration-300 {
+    animation-duration: 300ms;
+  }
+
+  .duration-500 {
+    animation-duration: 500ms;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn95 {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Accordion animations (para componentes futuros) */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
