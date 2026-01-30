@@ -70,15 +70,14 @@ const INITIAL_EMERGENCY_DRUGS: Drug[] = [
 
 const EmergencyCalculator: React.FC = () => {
   const [weight, setWeight] = useState<string>("");
-  const [unit, setUnit] = useState<"kg" | "lb">("kg");
   const [searchTerm, setSearchTerm] = useState("");
   const [drugs, setDrugs] = useState<Drug[]>(INITIAL_EMERGENCY_DRUGS);
 
   const actualWeight = useMemo(() => {
     const val = parseFloat(weight);
     if (isNaN(val)) return 0;
-    return unit === "lb" ? val * 0.453592 : val;
-  }, [weight, unit]);
+    return val;
+  }, [weight]);
 
   const handleConcentrationChange = (id: string, newConc: string) => {
     const val = parseFloat(newConc);
@@ -127,19 +126,10 @@ const EmergencyCalculator: React.FC = () => {
               onChange={(e) => setWeight(e.target.value)}
               className="flex-1 bg-white/5 border border-white/10 rounded-xl h-14 px-4 text-2xl font-bold outline-none focus:ring-2 ring-purple-500/50 transition-all"
             />
-            <div className="flex bg-white/10 border border-white/10 rounded-xl p-1">
-              <button
-                onClick={() => setUnit("kg")}
-                className={`px-4 rounded-lg transition-all font-bold ${unit === "kg" ? "bg-purple-600 shadow-glow text-white" : "text-muted-foreground hover:bg-white/5"}`}
-              >
+            <div className="flex bg-white/10 border border-white/10 rounded-xl p-1 items-center">
+              <span className="px-4 rounded-lg bg-purple-600 shadow-glow text-white font-bold">
                 kg
-              </button>
-              <button
-                onClick={() => setUnit("lb")}
-                className={`px-4 rounded-lg transition-all font-bold ${unit === "lb" ? "bg-purple-600 shadow-glow text-white" : "text-muted-foreground hover:bg-white/5"}`}
-              >
-                lb
-              </button>
+              </span>
             </div>
           </div>
         </div>
