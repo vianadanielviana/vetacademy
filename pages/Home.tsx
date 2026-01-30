@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ICONS } from "../constants";
+import PremiumModal from "../components/PremiumModal";
 
 const Home: React.FC = () => {
   const [showSpecialties, setShowSpecialties] = useState(false);
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const quickLinks = [
     {
@@ -33,7 +35,10 @@ const Home: React.FC = () => {
     <div className="space-y-6 animate-in fade-in duration-500 pb-10 max-w-3xl mx-auto">
       {/* Filtros Avançados */}
       <div className="flex justify-end">
-        <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 transition-all text-sm font-medium">
+        <button
+          onClick={() => setShowPremiumModal(true)}
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 transition-all text-sm font-medium"
+        >
           <ICONS.Filter size={16} />
           <span>Filtros Avançados</span>
           <span className="bg-yellow-500 text-yellow-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
@@ -110,7 +115,10 @@ const Home: React.FC = () => {
       )}
 
       {/* Card Intermediário com Favorito */}
-      <div className="relative p-5 rounded-2xl bg-gradient-to-r from-purple-600/40 to-pink-500/40 border border-white/10 overflow-hidden">
+      <div
+        onClick={() => setShowPremiumModal(true)}
+        className="relative p-5 rounded-2xl bg-gradient-to-r from-purple-600/40 to-pink-500/40 border border-white/10 overflow-hidden cursor-pointer hover:border-purple-500/50 transition-all"
+      >
         <div className="absolute top-3 right-3">
           <span className="bg-yellow-500 text-yellow-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
             Pro
@@ -130,6 +138,12 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Premium Modal */}
+      <PremiumModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   );
 };
