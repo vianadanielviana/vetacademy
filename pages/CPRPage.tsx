@@ -7,82 +7,62 @@ const CPRPage: React.FC = () => {
   const [protocol, setProtocol] = useState<CPRProtocol>(CPRProtocol.ALS);
   const [bpm, setBpm] = useState(120);
   const [volume, setVolume] = useState(80);
-  const [elapsedTime, setElapsedTime] = useState(0); // seconds
-  const [cycleTime, setCycleTime] = useState(0); // seconds in current 2-min cycle
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [cycleTime, setCycleTime] = useState(0);
 
-  // Fix: Used 'any' instead of 'NodeJS.Timeout' to avoid "Cannot find namespace 'NodeJS'" error in browser environments.
   const timerRef = useRef<any>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Audio Synthesis for Metronome
-  const playClick = () => {
-    if (!audioContextRef.current)
-      audioContextRef.current = new (
-        window.AudioContext || (window as any).webkitAudioContext
-      )();
-    const ctx = audioContextRef.current;
-    const osc = ctx.createOscillator();
-    const envelope = ctx.createGain();
+  // Inicializar áudio
+  useEffect(() => {
+    audioRef.current = new Audio("/cpr-audio.m4a");
+    audioRef.current.loop = true;
 
-    osc.frequency.setValueAtTime(880, ctx.currentTime);
-    envelope.gain.setValueAtTime((volume / 100) * 0.1, ctx.currentTime);
-    envelope.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
-    osc.connect(envelope);
-    envelope.connect(ctx.destination);
-
-    osc.start();
-    osc.stop(ctx.currentTime + 0.1);
-  };
-
-  // Portuguese Speech Synthesis
-  const speak = (text: string) => {
-    if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "pt-BR";
-      utterance.volume = volume / 100;
-      window.speechSynthesis.speak(utterance);
+  // Controlar volume
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
     }
-  };
+  }, [volume]);
 
+  // Controlar play/pause do áudio
+  useEffect(() => {
+    if (audioRef.current) {
+      if (state === CPRState.ACTIVE) {
+        audioRef.current.play().catch(console.error);
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [state]);
+
+  // Timer para contagem
   useEffect(() => {
     if (state === CPRState.ACTIVE) {
-      const clickInterval = (60 / bpm) * 1000;
-
       const interval = setInterval(() => {
         setElapsedTime((prev) => prev + 1);
         setCycleTime((prev) => {
           const next = prev + 1;
-
-          // RECOVER Alerts
-          if (next === 110)
-            speak("Preparar para verificar o pulso em 10 segundos");
-          if (next === 119) speak("Checar pulso, trocar o operador");
-
-          // Restart cycle logic
           if (next >= 120) {
-            // Logic for 10s pause could be added here
             return 0;
           }
           return next;
         });
-
-        // Breathing alert every 6 seconds for ALS
-        if (protocol === CPRProtocol.ALS && elapsedTime % 6 === 0) {
-          speak("Respiração");
-        }
       }, 1000);
-
-      const metronome = setInterval(() => {
-        playClick();
-      }, clickInterval);
 
       return () => {
         clearInterval(interval);
-        clearInterval(metronome);
       };
     }
-  }, [state, bpm, protocol, elapsedTime]);
+  }, [state, protocol, elapsedTime]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -96,6 +76,9 @@ const CPRPage: React.FC = () => {
     setState(CPRState.CONFIG);
     setElapsedTime(0);
     setCycleTime(0);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
   };
 
   const progress = (cycleTime / 120) * 100;
@@ -126,23 +109,6 @@ const CPRPage: React.FC = () => {
                 BLS (30:2)
               </button>
             </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <label className="text-sm text-muted-foreground uppercase tracking-wider">
-                Ritmo (BPM)
-              </label>
-              <span className="text-xl font-bold text-purple-400">{bpm}</span>
-            </div>
-            <input
-              type="range"
-              min="100"
-              max="120"
-              value={bpm}
-              onChange={(e) => setBpm(parseInt(e.target.value))}
-              className="w-full accent-purple-500"
-            />
           </div>
 
           <button
@@ -228,7 +194,7 @@ const CPRPage: React.FC = () => {
 
           <div className="w-full glass p-4 rounded-xl space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Volume do Guia</span>
+              <span className="text-muted-foreground">Volume do Áudio</span>
               <span>{volume}%</span>
             </div>
             <input
