@@ -32,6 +32,8 @@ import {
   ChevronDown,
   Crown,
   Bell,
+  Video,
+  BookMarked,
 } from "lucide-react";
 
 export const COLORS = {
@@ -80,4 +82,6 @@ export const ICONS = {
   Filter,
   Crown,
   Bell,
+  Video,
+  BookMarked,
 };

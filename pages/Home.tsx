@@ -42,15 +42,30 @@ const Home: React.FC = () => {
         </button>
       </div>
 
-      {/* Barra de Busca */}
-      <div className="relative group">
-        <div className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white/20" />
-        <input
-          type="text"
-          placeholder="Buscar artigos, protocolos, guias"
-          className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-14 pr-6 outline-none focus:ring-2 ring-purple-500/50 backdrop-blur-sm transition-all text-base"
-        />
-      </div>
+      {/* Conteúdo Didático - Link para página */}
+      <Link to="/conteudo" className="block group">
+        <div className="p-5 rounded-2xl bg-gradient-to-r from-purple-600/30 to-pink-500/30 border border-white/10 hover:border-purple-500/50 transition-all">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-purple-500/20 group-hover:bg-purple-500/30 transition-colors">
+                <ICONS.GraduationCap size={28} className="text-purple-400" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                  Conteúdo Didático
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Vídeos, artigos e guias para seu aprendizado
+                </p>
+              </div>
+            </div>
+            <ICONS.ChevronRight
+              size={24}
+              className="text-white/50 group-hover:text-purple-400 group-hover:translate-x-1 transition-all"
+            />
+          </div>
+        </div>
+      </Link>
 
       {/* Quick Links - Lista Vertical */}
       <div className="space-y-3">
@@ -113,34 +128,6 @@ const Home: React.FC = () => {
               className="text-white/50 hover:text-yellow-400 transition-colors"
             />
           </button>
-        </div>
-      </div>
-
-      {/* Cards PRO - Artigos, Protocolos, Vídeos */}
-      <div className="grid grid-cols-3 gap-3">
-        <div className="relative p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all cursor-pointer">
-          <div className="absolute top-2 right-2">
-            <span className="bg-yellow-500 text-yellow-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
-              Pro
-            </span>
-          </div>
-          <p className="text-white/80 font-medium mt-4">Artigos</p>
-        </div>
-        <div className="relative p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all cursor-pointer">
-          <div className="absolute top-2 right-2">
-            <span className="bg-yellow-500 text-yellow-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
-              Pro
-            </span>
-          </div>
-          <p className="text-white/80 font-medium mt-4">Protocolos</p>
-        </div>
-        <div className="relative p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all cursor-pointer">
-          <div className="absolute top-2 right-2">
-            <span className="bg-yellow-500 text-yellow-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
-              Pro
-            </span>
-          </div>
-          <p className="text-white/80 font-medium mt-4">Vídeos</p>
         </div>
       </div>
     </div>

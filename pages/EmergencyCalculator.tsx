@@ -5,66 +5,235 @@ import { Drug } from "../types";
 const INITIAL_EMERGENCY_DRUGS: Drug[] = [
   {
     id: "1",
-    name: "Adrenalina (1:1000)",
-    concentration: 1,
+    name: "Amiodarona",
+    concentration: 50,
     unit: "mg",
-    dosageRange: { min: 0.01, max: 0.02, unit: "mg/kg" },
-    indication: "Parada Cardiorespiratória",
-    route: "IV, IT",
+    dosageRange: { min: 2.5, max: 5, unit: "mg/kg" },
+    indication: "Arritmias ventriculares",
+    route: "IV Lento",
   },
   {
     id: "2",
-    name: "Atropina (0,5 mg/ml)",
-    concentration: 0.5,
+    name: "Atipamezole (Antisedan)",
+    concentration: 5,
     unit: "mg",
-    dosageRange: { min: 0.02, max: 0.04, unit: "mg/kg" },
-    indication: "Bradicardia grave",
-    route: "IV, IM",
+    dosageRange: { min: 0.1, max: 0.2, unit: "mg/kg" },
+    indication: "Reversão de alfa-2 agonistas",
+    route: "IM",
   },
   {
     id: "3",
-    name: "Lidocaína 2%",
+    name: "Sulfato de Atropina",
+    concentration: 0.5,
+    concentrationOptions: [0.25, 0.5],
+    unit: "mg",
+    dosageRange: { min: 0.02, max: 0.04, unit: "mg/kg" },
+    indication: "Bradicardia",
+    route: "IV, IM",
+  },
+  {
+    id: "4",
+    name: "Gluconato de Cálcio",
+    concentration: 100,
+    unit: "mg",
+    dosageRange: { min: 50, max: 100, unit: "mg/kg" },
+    indication: "Hipocalcemia/Hipercalemia",
+    route: "IV Lento",
+  },
+  {
+    id: "5",
+    name: "Dexametasona",
+    concentration: 4,
+    concentrationOptions: [2, 4],
+    unit: "mg",
+    dosageRange: { min: 0.1, max: 2, unit: "mg/kg" },
+    indication: "Anti-inflamatório/Choque",
+    route: "IV, IM",
+  },
+  {
+    id: "6",
+    name: "Desfibrilador Externo",
+    concentration: 1,
+    unit: "J",
+    dosageRange: { min: 2, max: 5, unit: "J/kg" },
+    indication: "Fibrilação Ventricular",
+    route: "Externo",
+    isDefibrillator: true,
+  },
+  {
+    id: "7",
+    name: "Desfibrilador Interno",
+    concentration: 1,
+    unit: "J",
+    dosageRange: { min: 0.2, max: 0.5, unit: "J/kg" },
+    indication: "Fibrilação Ventricular",
+    route: "Interno",
+    isDefibrillator: true,
+  },
+  {
+    id: "8",
+    name: "Diazepam",
+    concentration: 5,
+    unit: "mg",
+    dosageRange: { min: 0.5, max: 1, unit: "mg/kg" },
+    indication: "Status Epilepticus",
+    route: "IV, IR",
+  },
+  {
+    id: "9",
+    name: "Difenidramina",
+    concentration: 50,
+    unit: "mg",
+    dosageRange: { min: 1, max: 2, unit: "mg/kg" },
+    indication: "Reação Anafilática",
+    route: "IV, IM",
+  },
+  {
+    id: "10",
+    name: "Dobutamina",
+    concentration: 12.5,
+    unit: "mg",
+    dosageRange: { min: 2, max: 20, unit: "mcg/kg/min" },
+    indication: "Suporte Inotrópico",
+    route: "IV Infusão",
+  },
+  {
+    id: "11",
+    name: "Dopamina",
+    concentration: 5,
+    unit: "mg",
+    dosageRange: { min: 2, max: 10, unit: "mcg/kg/min" },
+    indication: "Suporte Vasopressor",
+    route: "IV Infusão",
+  },
+  {
+    id: "12",
+    name: "Doxapram",
     concentration: 20,
+    unit: "mg",
+    dosageRange: { min: 1, max: 5, unit: "mg/kg" },
+    indication: "Estimulante Respiratório",
+    route: "IV",
+  },
+  {
+    id: "13",
+    name: "Epinefrina (Dose Alta)",
+    concentration: 1,
+    unit: "mg",
+    dosageRange: { min: 0.1, max: 0.2, unit: "mg/kg" },
+    indication: "PCR Prolongada",
+    route: "IV, IT",
+  },
+  {
+    id: "14",
+    name: "Epinefrina (Dose Baixa)",
+    concentration: 1,
+    unit: "mg",
+    dosageRange: { min: 0.01, max: 0.02, unit: "mg/kg" },
+    indication: "PCR/Anafilaxia",
+    route: "IV, IT",
+  },
+  {
+    id: "15",
+    name: "Flumazenil",
+    concentration: 0.1,
+    unit: "mg",
+    dosageRange: { min: 0.01, max: 0.02, unit: "mg/kg" },
+    indication: "Reversão Benzodiazepínicos",
+    route: "IV",
+  },
+  {
+    id: "16",
+    name: "Furosemida",
+    concentration: 10,
+    unit: "mg",
+    dosageRange: { min: 1, max: 4, unit: "mg/kg" },
+    indication: "Edema Pulmonar",
+    route: "IV, IM",
+  },
+  {
+    id: "17",
+    name: "Glicopirrolato",
+    concentration: 0.2,
+    unit: "mg",
+    dosageRange: { min: 0.005, max: 0.01, unit: "mg/kg" },
+    indication: "Bradicardia",
+    route: "IV, IM",
+  },
+  {
+    id: "18",
+    name: "Heparina",
+    concentration: 5000,
+    unit: "UI",
+    dosageRange: { min: 100, max: 200, unit: "UI/kg" },
+    indication: "Anticoagulação",
+    route: "IV, SC",
+  },
+  {
+    id: "19",
+    name: "Lidocaína",
+    concentration: 20,
+    concentrationOptions: [10, 20],
     unit: "mg",
     dosageRange: { min: 2, max: 4, unit: "mg/kg" },
     indication: "Taquicardia Ventricular",
     route: "IV",
   },
   {
-    id: "4",
-    name: "Diazepam (5 mg/ml)",
-    concentration: 5,
+    id: "20",
+    name: "Manitol",
+    concentration: 200,
     unit: "mg",
-    dosageRange: { min: 0.5, max: 1.0, unit: "mg/kg" },
-    indication: "Status Epilepticus",
-    route: "IV, IR",
+    dosageRange: { min: 0.5, max: 1, unit: "g/kg" },
+    indication: "Edema Cerebral",
+    route: "IV Lento",
   },
   {
-    id: "5",
-    name: "Naloxona (0,4 mg/ml)",
+    id: "21",
+    name: "Midazolam",
+    concentration: 5,
+    concentrationOptions: [1, 5],
+    unit: "mg",
+    dosageRange: { min: 0.2, max: 0.5, unit: "mg/kg" },
+    indication: "Sedação/Convulsões",
+    route: "IV, IM, IN",
+  },
+  {
+    id: "22",
+    name: "Naloxona",
     concentration: 0.4,
     unit: "mg",
-    dosageRange: { min: 0.04, max: 0.04, unit: "mg/kg" },
+    dosageRange: { min: 0.01, max: 0.04, unit: "mg/kg" },
     indication: "Reversão de Opioides",
     route: "IV, IM",
   },
   {
-    id: "6",
-    name: "Fentanil (0,05 mg/ml)",
-    concentration: 0.05,
+    id: "23",
+    name: "Norepinefrina",
+    concentration: 1,
     unit: "mg",
-    dosageRange: { min: 0.002, max: 0.005, unit: "mg/kg" },
-    indication: "Analgesia/Indução",
-    route: "IV",
+    dosageRange: { min: 0.1, max: 2, unit: "mcg/kg/min" },
+    indication: "Choque Vasoplégico",
+    route: "IV Infusão",
   },
   {
-    id: "7",
-    name: "Gluconato de Cálcio 10%",
+    id: "24",
+    name: "Fenobarbital",
     concentration: 100,
+    concentrationOptions: [100, 200],
     unit: "mg",
-    dosageRange: { min: 50, max: 100, unit: "mg/kg" },
-    indication: "Hipocalcemia/Hipercalemia",
+    dosageRange: { min: 2, max: 4, unit: "mg/kg" },
+    indication: "Status Epilepticus",
     route: "IV Lento",
+  },
+  {
+    id: "25",
+    name: "Vasopressina",
+    concentration: 20,
+    unit: "UI",
+    dosageRange: { min: 0.4, max: 0.8, unit: "UI/kg" },
+    indication: "PCR Refratária",
+    route: "IV",
   },
 ];
 
@@ -94,6 +263,29 @@ const EmergencyCalculator: React.FC = () => {
   );
 
   const resetDrugs = () => setDrugs(INITIAL_EMERGENCY_DRUGS);
+
+  const calculateResult = (drug: Drug, weightVal: number) => {
+    const minDose = weightVal * drug.dosageRange.min;
+    const maxDose = weightVal * drug.dosageRange.max;
+
+    if (drug.isDefibrillator) {
+      // Para desfibriladores, o resultado é em Joules diretamente
+      return {
+        minResult: minDose,
+        maxResult: maxDose,
+        unit: "Joules",
+      };
+    }
+
+    // Para medicamentos, calcular volume
+    const minVol = minDose / drug.concentration;
+    const maxVol = maxDose / drug.concentration;
+    return {
+      minResult: minVol,
+      maxResult: maxVol,
+      unit: "ml",
+    };
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-20">
@@ -165,22 +357,16 @@ const EmergencyCalculator: React.FC = () => {
                 <th className="px-6 py-5 border-b border-white/5">
                   Conc. (mg/ml)
                 </th>
-                <th className="px-6 py-5 border-b border-white/5">
-                  Dose (mg/kg)
-                </th>
+                <th className="px-6 py-5 border-b border-white/5">Dose</th>
                 <th className="px-6 py-5 border-b border-white/5 text-purple-400">
-                  Volume Total (ml)
+                  Resultado
                 </th>
                 <th className="px-6 py-5 border-b border-white/5">Via</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
               {filteredDrugs.map((drug) => {
-                const weightVal = actualWeight;
-                const minDose = weightVal * drug.dosageRange.min;
-                const maxDose = weightVal * drug.dosageRange.max;
-                const minVol = minDose / drug.concentration;
-                const maxVol = maxDose / drug.concentration;
+                const result = calculateResult(drug, actualWeight);
 
                 return (
                   <tr
@@ -196,30 +382,72 @@ const EmergencyCalculator: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <input
-                        type="number"
-                        step="0.01"
-                        value={drug.concentration}
-                        onChange={(e) =>
-                          handleConcentrationChange(drug.id, e.target.value)
-                        }
-                        className="w-20 bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-sm font-mono focus:ring-1 ring-purple-500/50 outline-none"
-                      />
+                      {drug.isDefibrillator ? (
+                        <span className="text-sm text-muted-foreground">—</span>
+                      ) : drug.concentrationOptions &&
+                        drug.concentrationOptions.length > 1 ? (
+                        <select
+                          value={drug.concentration}
+                          onChange={(e) =>
+                            handleConcentrationChange(drug.id, e.target.value)
+                          }
+                          className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm font-mono focus:ring-1 ring-purple-500/50 outline-none cursor-pointer hover:bg-white/10 transition-colors"
+                        >
+                          {drug.concentrationOptions.map((opt) => (
+                            <option
+                              key={opt}
+                              value={opt}
+                              className="bg-[#1a1a2e] text-white"
+                            >
+                              {opt} {drug.unit === "UI" ? "UI/ml" : "mg/ml"}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={drug.concentration}
+                          onChange={(e) =>
+                            handleConcentrationChange(drug.id, e.target.value)
+                          }
+                          className="w-24 bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-sm font-mono focus:ring-1 ring-purple-500/50 outline-none"
+                        />
+                      )}
                     </td>
                     <td className="px-6 py-4 text-sm font-mono whitespace-nowrap">
                       {drug.dosageRange.min === drug.dosageRange.max
-                        ? drug.dosageRange.min
-                        : `${drug.dosageRange.min} - ${drug.dosageRange.max}`}
+                        ? `${drug.dosageRange.min} ${drug.dosageRange.unit}`
+                        : `${drug.dosageRange.min} - ${drug.dosageRange.max} ${drug.dosageRange.unit}`}
                     </td>
                     <td className="px-6 py-4">
-                      {weightVal > 0 ? (
-                        <div className="px-4 py-2 bg-purple-500/20 border border-purple-500/40 rounded-xl inline-flex flex-col items-center min-w-[100px] shadow-glow animate-in zoom-in-95">
-                          <span className="text-lg font-black text-purple-200 leading-tight">
-                            {minVol.toFixed(2)}{" "}
-                            {minVol !== maxVol && `- ${maxVol.toFixed(2)}`}
+                      {actualWeight > 0 ? (
+                        <div
+                          className={`px-4 py-2 ${
+                            drug.isDefibrillator
+                              ? "bg-red-500/20 border-red-500/40"
+                              : "bg-purple-500/20 border-purple-500/40"
+                          } border rounded-xl inline-flex flex-col items-center min-w-[100px] shadow-glow animate-in zoom-in-95`}
+                        >
+                          <span
+                            className={`text-lg font-black leading-tight ${
+                              drug.isDefibrillator
+                                ? "text-red-200"
+                                : "text-purple-200"
+                            }`}
+                          >
+                            {result.minResult.toFixed(2)}
+                            {result.minResult !== result.maxResult &&
+                              ` - ${result.maxResult.toFixed(2)}`}
                           </span>
-                          <span className="text-[10px] uppercase font-bold text-purple-400/80">
-                            Mililitros
+                          <span
+                            className={`text-[10px] uppercase font-bold ${
+                              drug.isDefibrillator
+                                ? "text-red-400/80"
+                                : "text-purple-400/80"
+                            }`}
+                          >
+                            {result.unit}
                           </span>
                         </div>
                       ) : (
@@ -252,47 +480,6 @@ const EmergencyCalculator: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="group glass p-6 rounded-2xl border-l-4 border-red-500 hover:bg-red-500/5 transition-all space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xl font-bold flex items-center gap-2">
-              <ICONS.Activity className="text-red-500" /> Desfibrilação
-            </h3>
-            <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-1 rounded font-bold uppercase">
-              RECOVER 2024
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-white/5 rounded-xl border border-white/5 group-hover:border-red-500/20">
-              <span className="block text-xs text-muted-foreground uppercase font-bold mb-1">
-                Externo (Bifásico)
-              </span>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-black">
-                  {actualWeight > 0 ? (actualWeight * 3).toFixed(0) : "3-5"}
-                </span>
-                <span className="text-sm font-bold text-muted-foreground">
-                  Joules
-                </span>
-              </div>
-            </div>
-            <div className="p-4 bg-white/5 rounded-xl border border-white/5 group-hover:border-red-500/20">
-              <span className="block text-xs text-muted-foreground uppercase font-bold mb-1">
-                Interno
-              </span>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-black">
-                  {actualWeight > 0
-                    ? (actualWeight * 0.1).toFixed(1)
-                    : "0.1-0.5"}
-                </span>
-                <span className="text-sm font-bold text-muted-foreground">
-                  Joules
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="group glass p-6 rounded-2xl border-l-4 border-blue-500 hover:bg-blue-500/5 transition-all space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-bold flex items-center gap-2">
@@ -329,6 +516,33 @@ const EmergencyCalculator: React.FC = () => {
                   ml
                 </span>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="group glass p-6 rounded-2xl border-l-4 border-yellow-500 hover:bg-yellow-500/5 transition-all space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl font-bold flex items-center gap-2">
+              <ICONS.AlertTriangle className="text-yellow-500" /> Legenda
+            </h3>
+          </div>
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded bg-purple-500" />
+              <span className="text-muted-foreground">
+                Volume em mililitros (ml)
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded bg-red-500" />
+              <span className="text-muted-foreground">
+                Energia em Joules (desfibriladores)
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">
+                💡 Clique na concentração para ajustar conforme disponível
+              </span>
             </div>
           </div>
         </div>
