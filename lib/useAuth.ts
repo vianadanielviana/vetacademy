@@ -59,6 +59,9 @@ export function useAuth(): AuthState & AuthActions {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: "https://www.vetacademy.app/#/",
+      },
     });
     return { error };
   };
@@ -69,7 +72,7 @@ export function useAuth(): AuthState & AuthActions {
 
   const resetPassword = async (email: string) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/#/auth`,
+      redirectTo: "https://www.vetacademy.app/#/auth",
     });
     return { error };
   };
