@@ -79,7 +79,13 @@
 }
 
 body {
-  background-color: hsl(var(--background));
+  background: linear-gradient(
+    180deg,
+    hsl(270 35% 22%) 0%,
+    hsl(272 38% 28%) 60%,
+    hsl(280 42% 35%) 100%
+  );
+  background-attachment: fixed;
   color: hsl(var(--foreground));
   font-family:
     "Inter",
@@ -92,14 +98,16 @@ body {
    CLASSES UTILITÁRIAS CUSTOMIZADAS
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* GRADIENTES */
+/* GRADIENTES
+   NOTE: The fixed gradient background is now on <body> to avoid
+   a Chrome compositing bug. When background-attachment:fixed is
+   on a parent that contains backdrop-filter children, Chrome's
+   compositor fails to paint correctly during scroll, showing an
+   empty gradient area. Moving the fixed gradient to <body> (which
+   has no backdrop-filter descendants in its stacking context)
+   resolves this while keeping the same visual appearance. */
 .gradient-primary {
-  background: linear-gradient(
-    180deg,
-    hsl(270 35% 22%) 0%,
-    hsl(272 38% 28%) 60%,
-    hsl(280 42% 35%) 100%
-  );
+  /* Transparent - the gradient comes from <body> */
 }
 
 .gradient-button {
@@ -125,6 +133,7 @@ body {
 /* GLASS EFFECT */
 .glass {
   background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -138,9 +147,14 @@ body {
   box-shadow: var(--shadow-glass);
 }
 
-/* HEADER - LOVABLE EXACT */
+/* HEADER - LOVABLE EXACT (semi-transparent to show gradient) */
 .header-gradient {
-  background: hsl(270 40% 18%);
+  background: rgba(38, 19, 57, 0.3);
+}
+
+/* NAV - LOVABLE EXACT */
+.nav-gradient {
+  background: rgba(38, 19, 57, 0.2);
 }
 
 /* LOGO - LOVABLE EXACT */
@@ -173,6 +187,7 @@ body {
 /* CARDS - Padrão VetAcademy */
 .card-glass {
   background: hsl(var(--card) / 0.3);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1px solid hsl(var(--border) / 0.5);
   border-radius: 1rem;
@@ -198,6 +213,7 @@ body {
 .btn-ghost {
   background: hsl(var(--muted) / 0.3);
   color: hsl(var(--foreground));
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   border: 1px solid hsl(var(--border) / 0.5);
   border-radius: 0.75rem;

@@ -213,11 +213,9 @@ const Layout: React.FC<LayoutProps> = ({ onLogout }) => {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto">
-        <div className="min-h-full">
-          <div className="max-w-7xl mx-auto p-4 md:p-6">
-            <Outlet />
-          </div>
+      <main className="flex-1">
+        <div className="max-w-7xl mx-auto p-4 md:p-6">
+          <Outlet />
         </div>
       </main>
     </div>

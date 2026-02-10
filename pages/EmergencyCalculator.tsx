@@ -304,7 +304,7 @@ const EmergencyCalculator: React.FC = () => {
         </button>
       </div>
 
-      <div className="glass p-6 rounded-2xl grid grid-cols-1 md:grid-cols-2 gap-6 sticky top-20 z-40 shadow-2xl">
+      <div className="p-6 rounded-2xl grid grid-cols-1 md:grid-cols-2 gap-6 sticky top-0 z-40 shadow-2xl bg-[hsl(270,40%,18%)] border border-white/10">
         <div className="space-y-4">
           <label className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
             Peso do Paciente
