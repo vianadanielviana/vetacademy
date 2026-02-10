@@ -12,17 +12,6 @@ const CPRPage: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const volumeRef = useRef(volume / 100);
 
-  // Função para falar em português brasileiro
-  const speak = (text: string) => {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'pt-BR';
-    utterance.rate = 0.9;
-    utterance.volume = volumeRef.current;
-    window.speechSynthesis.speak(utterance);
-  };
-
   // Inicializar áudio
   useEffect(() => {
     audioRef.current = new Audio("/cpr-audio.m4a");
@@ -63,20 +52,6 @@ const CPRPage: React.FC = () => {
         setCycleTime((prev) => {
           const next = prev + 1;
 
-          if (next === 1) {
-            speak('Iniciando novo ciclo de 2 minutos');
-          } else if (next === 110) {
-            speak('Preparar para verificar o pulso em 10 segundos');
-          } else if (next === 120) {
-            speak('Fim do ciclo. Verificar pulso agora');
-          }
-
-          if (protocol === CPRProtocol.BLS) {
-            if (next === 18 || next === 40 || next === 62 || next === 84 || next === 106) {
-              speak('Duas respirações');
-            }
-          }
-
           if (next >= 120) {
             return 0;
           }
@@ -98,17 +73,10 @@ const CPRPage: React.FC = () => {
 
   const startTimer = () => {
     setState(CPRState.ACTIVE);
-    if (cycleTime === 0 && elapsedTime === 0) {
-      speak('Começando RCP. Inicie as compressões torácicas');
-    }
   };
 
   const pauseTimer = () => {
     setState(CPRState.PAUSE);
-    window.speechSynthesis.cancel();
-    setTimeout(() => {
-      speak('RCP pausada');
-    }, 100);
   };
 
   const resetTimer = () => {
@@ -118,7 +86,6 @@ const CPRPage: React.FC = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
     }
-    window.speechSynthesis.cancel();
   };
 
   const progress = (cycleTime / 120) * 100;
