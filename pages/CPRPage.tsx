@@ -16,6 +16,7 @@ const CPRPage: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const voicesLoadedRef = useRef(false);
   const ptBrVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
+  const volumeRef = useRef(volume / 100);
 
   // Função para falar em português brasileiro
   const speak = (text: string) => {
@@ -68,7 +69,7 @@ const CPRPage: React.FC = () => {
     utterance.lang = 'pt-BR';
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
-    utterance.volume = 1.0;
+    utterance.volume = volumeRef.current;
 
     console.log('🔧 Configurações do utterance:', {
       lang: utterance.lang,
@@ -244,6 +245,7 @@ const CPRPage: React.FC = () => {
 
   // Controlar volume
   useEffect(() => {
+    volumeRef.current = volume / 100;
     if (audioRef.current) {
       audioRef.current.volume = volume / 100;
     }
