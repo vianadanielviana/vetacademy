@@ -487,7 +487,7 @@ const CPRPage: React.FC = () => {
               onClick={resetTimer}
               className="px-6 bg-red-600/20 hover:bg-red-600 border border-red-500/50 rounded-2xl text-red-500 hover:text-white transition-all"
             >
-              RESET
+              REINICIAR
             </button>
           </div>
 
