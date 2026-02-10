@@ -3,17 +3,9 @@ import { ICONS } from "../constants";
 
 const Calculator: React.FC = () => {
   const [weight, setWeight] = useState("");
-  const [selectedSpecies, setSelectedSpecies] = useState("dog");
   const [medication, setMedication] = useState("");
   const [dosage, setDosage] = useState("");
   const [result, setResult] = useState<number | null>(null);
-
-  const species = [
-    { id: "dog", name: "Cão", icon: ICONS.Dog },
-    { id: "cat", name: "Gato", icon: ICONS.Cat },
-    { id: "bird", name: "Ave", icon: ICONS.Bird },
-    { id: "other", name: "Outros", icon: ICONS.Rabbit },
-  ];
 
   const calculateDosage = () => {
     const weightNum = parseFloat(weight);
@@ -31,6 +23,7 @@ const Calculator: React.FC = () => {
     setResult(null);
   };
 
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-10">
       {/* Header */}
@@ -42,44 +35,6 @@ const Calculator: React.FC = () => {
           Calcule dosagens precisas para seus pacientes.
         </p>
       </div>
-
-      {/* Species Selection */}
-      <section className="glass rounded-2xl p-6 border border-white/5">
-        <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-          <ICONS.Stethoscope size={20} className="text-purple-400" />
-          Selecione a Espécie
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {species.map((s) => {
-            const Icon = s.icon;
-            return (
-              <button
-                key={s.id}
-                onClick={() => setSelectedSpecies(s.id)}
-                className={`flex flex-col items-center gap-3 p-5 rounded-xl transition-all duration-200 border ${
-                  selectedSpecies === s.id
-                    ? "bg-gradient-button border-purple-500/50 shadow-glow"
-                    : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20"
-                }`}
-              >
-                <Icon
-                  size={32}
-                  className={
-                    selectedSpecies === s.id ? "text-white" : "text-purple-400"
-                  }
-                />
-                <span
-                  className={`text-sm font-bold ${
-                    selectedSpecies === s.id ? "text-white" : "text-white/70"
-                  }`}
-                >
-                  {s.name}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </section>
 
       {/* Calculator Form */}
       <section className="glass rounded-2xl p-6 border border-white/5">
@@ -171,9 +126,7 @@ const Calculator: React.FC = () => {
             </p>
             {medication && (
               <p className="text-sm text-white/70 mt-3">
-                {medication} para{" "}
-                {species.find((s) => s.id === selectedSpecies)?.name} de{" "}
-                {weight}kg
+                {medication} — {weight}kg
               </p>
             )}
           </div>
