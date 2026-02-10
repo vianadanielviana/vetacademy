@@ -105,6 +105,7 @@ const Home: React.FC = () => {
           {specialties.map((spec) => (
             <div
               key={spec.name}
+              onClick={() => setShowPremiumModal(true)}
               className="flex flex-col items-center gap-2 p-4 bg-white/5 rounded-xl hover:bg-white/10 cursor-pointer border border-white/5 transition-all active:scale-95"
             >
               <span className="text-2xl">{spec.icon}</span>
