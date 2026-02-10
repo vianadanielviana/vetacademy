@@ -184,7 +184,7 @@ const INITIAL_EMERGENCY_DRUGS: Drug[] = [
     name: "Manitol",
     concentration: 200,
     unit: "mg",
-    dosageRange: { min: 0.5, max: 1, unit: "g/kg" },
+    dosageRange: { min: 500, max: 1000, unit: "mg/Kg" },
     indication: "Edema Cerebral",
     route: "IV Lento",
   },
