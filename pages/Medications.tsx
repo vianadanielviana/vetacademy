@@ -23,10 +23,23 @@ const Medications: React.FC = () => {
           .order("name");
 
         if (fetchError) {
-          throw fetchError;
+          console.error("Supabase error:", fetchError);
+          setError(
+            `Erro ao carregar medicamentos: ${fetchError.message}. Verifique sua conexão e tente novamente.`,
+          );
+          return;
         }
 
-        setMedications(data || []);
+        const safeMedications = (data || []).map((med) => ({
+          ...med,
+          name: med.name || "",
+          category: med.category || "",
+          indication: med.indication || "",
+          dosagedog: med.dosagedog || "",
+          dosagecat: med.dosagecat || "",
+        }));
+
+        setMedications(safeMedications);
       } catch (err) {
         console.error("Erro ao buscar medicamentos:", err);
         setError("Erro ao carregar medicamentos. Tente novamente.");
@@ -38,12 +51,14 @@ const Medications: React.FC = () => {
     fetchMedications();
   }, []);
 
-  const filteredMedications = medications.filter(
-    (med) =>
-      med.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      med.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      med.indication.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const filteredMedications = medications.filter((med) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      (med.name || "").toLowerCase().includes(query) ||
+      (med.category || "").toLowerCase().includes(query) ||
+      (med.indication || "").toLowerCase().includes(query)
+    );
+  });
 
   const openDetail = (med: Medication) => {
     setSelectedMed(med);
@@ -112,14 +127,14 @@ const Medications: React.FC = () => {
               <div className="space-y-2 relative z-10">
                 <div className="flex justify-between items-start">
                   <h3 className="text-xl font-bold group-hover:text-purple-300 transition-colors">
-                    {med.name}
+                    {med.name || "Sem nome"}
                   </h3>
                 </div>
                 <span className="inline-block px-2 py-1 bg-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-widest rounded">
-                  {med.category}
+                  {med.category || "Sem categoria"}
                 </span>
                 <p className="text-sm text-muted-foreground line-clamp-2">
-                  {med.indication}
+                  {med.indication || "Sem indicação"}
                 </p>
               </div>
               <div className="mt-auto flex items-center justify-between text-xs font-bold text-purple-400/80 uppercase tracking-tighter">
@@ -214,7 +229,7 @@ const Medications: React.FC = () => {
                           Cães
                         </h4>
                         <p className="text-sm font-medium leading-relaxed text-gray-200">
-                          {selectedMed.dosagedog}
+                          {selectedMed.dosagedog || "Dosagem não disponível"}
                         </p>
                       </div>
                       <div className="glass p-5 rounded-2xl border-l-4 border-pink-500 bg-pink-500/5">
@@ -222,7 +237,7 @@ const Medications: React.FC = () => {
                           Gatos
                         </h4>
                         <p className="text-sm font-medium leading-relaxed text-gray-200">
-                          {selectedMed.dosagecat}
+                          {selectedMed.dosagecat || "Dosagem não disponível"}
                         </p>
                       </div>
                     </div>

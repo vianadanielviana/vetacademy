@@ -1,6 +1,7 @@
 import React from "react";
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./lib/useAuth";
+import ErrorBoundary from "./components/ErrorBoundary";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import CPRPage from "./pages/CPRPage";
@@ -29,47 +30,49 @@ const App: React.FC = () => {
   }
 
   return (
-    <HashRouter>
-      <Routes>
-        {/* Auth route - redirect to home if already authenticated */}
-        <Route
-          path="/auth"
-          element={isAuthenticated ? <Navigate to="/" /> : <Auth />}
-        />
-
-        {/* Protected routes - require authentication */}
-        <Route
-          element={
-            isAuthenticated ? (
-              <Layout onLogout={signOut} />
-            ) : (
-              <Navigate to="/auth" />
-            )
-          }
-        >
-          <Route path="/" element={<Home />} />
-          <Route path="/cpr" element={<CPRPage />} />
-          <Route path="/emergencia" element={<EmergencyCalculator />} />
-          <Route path="/medicamentos" element={<Medications />} />
-          <Route path="/calculadora" element={<Calculator />} />
-          <Route path="/conteudo" element={<Content />} />
+    <ErrorBoundary>
+      <HashRouter>
+        <Routes>
+          {/* Auth route - redirect to home if already authenticated */}
           <Route
-            path="/calc"
-            element={
-              <div className="p-8">
-                <h1 className="text-2xl font-bold">Calculadoras Gerais</h1>
-                <p className="text-muted-foreground mt-2">
-                  Em desenvolvimento...
-                </p>
-              </div>
-            }
+            path="/auth"
+            element={isAuthenticated ? <Navigate to="/" /> : <Auth />}
           />
-        </Route>
 
-        {/* Catch-all redirect */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </HashRouter>
+          {/* Protected routes - require authentication */}
+          <Route
+            element={
+              isAuthenticated ? (
+                <Layout onLogout={signOut} />
+              ) : (
+                <Navigate to="/auth" />
+              )
+            }
+          >
+            <Route path="/" element={<Home />} />
+            <Route path="/cpr" element={<CPRPage />} />
+            <Route path="/emergencia" element={<EmergencyCalculator />} />
+            <Route path="/medicamentos" element={<Medications />} />
+            <Route path="/calculadora" element={<Calculator />} />
+            <Route path="/conteudo" element={<Content />} />
+            <Route
+              path="/calc"
+              element={
+                <div className="p-8">
+                  <h1 className="text-2xl font-bold">Calculadoras Gerais</h1>
+                  <p className="text-muted-foreground mt-2">
+                    Em desenvolvimento...
+                  </p>
+                </div>
+              }
+            />
+          </Route>
+
+          {/* Catch-all redirect */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </HashRouter>
+    </ErrorBoundary>
   );
 };
 
