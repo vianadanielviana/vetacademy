@@ -93,31 +93,7 @@ const CPRPage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto h-[calc(100vh-8rem)] flex flex-col justify-center gap-8 animate-in slide-in-from-bottom duration-500 font-rubik">
       {state === CPRState.CONFIG ? (
-        <div className="glass p-8 rounded-3xl space-y-8">
-          <h2 className="text-2xl font-bold text-center">
-            Configuração de RCP
-          </h2>
-
-          <div className="space-y-4">
-            <label className="text-sm text-muted-foreground uppercase tracking-wider block">
-              Protocolo
-            </label>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                onClick={() => setProtocol(CPRProtocol.ALS)}
-                className={`p-4 rounded-xl border transition-all ${protocol === CPRProtocol.ALS ? "bg-purple-600 border-purple-400" : "bg-white/5 border-white/10"}`}
-              >
-                ALS (Contínuo)
-              </button>
-              <button
-                onClick={() => setProtocol(CPRProtocol.BLS)}
-                className={`p-4 rounded-xl border transition-all ${protocol === CPRProtocol.BLS ? "bg-purple-600 border-purple-400" : "bg-white/5 border-white/10"}`}
-              >
-                BLS (30:2)
-              </button>
-            </div>
-          </div>
-
+        <div className="glass p-8 rounded-3xl">
           <button
             onClick={startTimer}
             className="w-full bg-gradient-button h-16 rounded-2xl text-xl font-bold shadow-glow flex items-center justify-center gap-2"

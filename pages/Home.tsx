@@ -9,7 +9,7 @@ const Home: React.FC = () => {
 
   const quickLinks = [
     {
-      title: "CPR / Recover",
+      title: "RCP",
       path: "/cpr",
     },
     {
