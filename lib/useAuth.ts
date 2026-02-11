@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { supabase } from "./supabase";
+import { supabase, isMissingCredentials } from "./supabase";
 import type { User, Session, AuthError } from "@supabase/supabase-js";
 
 interface AuthState {
@@ -28,6 +28,11 @@ export function useAuth(): AuthState & AuthActions {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (isMissingCredentials) {
+      setLoading(false);
+      return;
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
