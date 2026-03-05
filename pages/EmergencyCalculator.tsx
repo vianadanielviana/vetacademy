@@ -91,7 +91,7 @@ const INITIAL_EMERGENCY_DRUGS: Drug[] = [
   {
     id: "10",
     name: "Dobutamina",
-    concentration: 12.5,
+    concentration: 12500,
     unit: "mg",
     dosageRange: { min: 2, max: 20, unit: "mcg/kg/min" },
     indication: "Suporte Inotrópico",
@@ -100,7 +100,7 @@ const INITIAL_EMERGENCY_DRUGS: Drug[] = [
   {
     id: "11",
     name: "Dopamina",
-    concentration: 5,
+    concentration: 5000,
     unit: "mg",
     dosageRange: { min: 2, max: 10, unit: "mcg/kg/min" },
     indication: "Suporte Vasopressor",
@@ -210,7 +210,7 @@ const INITIAL_EMERGENCY_DRUGS: Drug[] = [
   {
     id: "23",
     name: "Norepinefrina",
-    concentration: 1,
+    concentration: 1000,
     unit: "mg",
     dosageRange: { min: 0.1, max: 2, unit: "mcg/kg/min" },
     indication: "Choque Vasoplégico",
