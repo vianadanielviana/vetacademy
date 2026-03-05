@@ -319,7 +319,7 @@ const EmergencyCalculator: React.FC = () => {
               placeholder="0.0"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="flex-1 bg-white/5 border border-white/10 rounded-xl h-14 px-4 text-2xl font-bold outline-none focus:ring-2 ring-purple-500/50 transition-all"
+              className="flex-1 min-w-0 bg-white/5 border border-white/10 rounded-xl h-14 px-4 text-2xl font-bold outline-none focus:ring-2 ring-purple-500/50 transition-all"
             />
             <div className="flex bg-white/10 border border-white/10 rounded-xl p-1 items-center">
               <span className="px-4 rounded-lg bg-purple-600 shadow-glow text-white font-bold">
@@ -426,14 +426,14 @@ const EmergencyCalculator: React.FC = () => {
                     <td className="px-6 py-4">
                       {actualWeight > 0 ? (
                         <div
-                          className={`px-4 py-2 ${
+                          className={`px-2 py-2 ${
                             drug.isDefibrillator
                               ? "bg-red-500/20 border-red-500/40"
                               : "bg-purple-500/20 border-purple-500/40"
-                          } border rounded-xl inline-flex flex-col items-center min-w-[100px] shadow-glow animate-in zoom-in-95`}
+                          } border rounded-xl inline-flex flex-col items-center min-w-[80px] shadow-glow animate-in zoom-in-95`}
                         >
                           <span
-                            className={`text-lg font-black leading-tight ${
+                            className={`text-sm font-black leading-tight whitespace-nowrap ${
                               drug.isDefibrillator
                                 ? "text-red-200"
                                 : "text-purple-200"
