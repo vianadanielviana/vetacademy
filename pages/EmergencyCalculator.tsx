@@ -90,7 +90,7 @@ const INITIAL_EMERGENCY_DRUGS: Drug[] = [
   },
   {
     id: "10",
-    name: "Dobutamina",
+    name: "Dobutamina (mcg)",
     concentration: 12500,
     unit: "mg",
     dosageRange: { min: 2, max: 20, unit: "mcg/kg/min" },
@@ -99,7 +99,7 @@ const INITIAL_EMERGENCY_DRUGS: Drug[] = [
   },
   {
     id: "11",
-    name: "Dopamina",
+    name: "Dopamina (mcg)",
     concentration: 5000,
     unit: "mg",
     dosageRange: { min: 2, max: 10, unit: "mcg/kg/min" },
@@ -209,7 +209,7 @@ const INITIAL_EMERGENCY_DRUGS: Drug[] = [
   },
   {
     id: "23",
-    name: "Norepinefrina",
+    name: "Norepinefrina (mcg)",
     concentration: 1000,
     unit: "mg",
     dosageRange: { min: 0.1, max: 2, unit: "mcg/kg/min" },
@@ -280,10 +280,13 @@ const EmergencyCalculator: React.FC = () => {
     // Para medicamentos, calcular volume
     const minVol = minDose / drug.concentration;
     const maxVol = maxDose / drug.concentration;
+    const isInfusion = drug.dosageRange.unit === "mcg/kg/min";
+    const decimals = isInfusion ? 4 : 2;
     return {
       minResult: minVol,
       maxResult: maxVol,
-      unit: "ml",
+      unit: isInfusion ? "ml/min" : "ml",
+      decimals,
     };
   };
 
@@ -436,9 +439,9 @@ const EmergencyCalculator: React.FC = () => {
                                 : "text-purple-200"
                             }`}
                           >
-                            {result.minResult.toFixed(2)}
+                            {result.minResult.toFixed(result.decimals ?? 2)}
                             {result.minResult !== result.maxResult &&
-                              ` - ${result.maxResult.toFixed(2)}`}
+                              ` - ${result.maxResult.toFixed(result.decimals ?? 2)}`}
                           </span>
                           <span
                             className={`text-[10px] uppercase font-bold ${
