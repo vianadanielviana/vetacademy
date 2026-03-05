@@ -4,7 +4,6 @@ import { ICONS } from "../constants";
 import PremiumModal from "../components/PremiumModal";
 
 const Home: React.FC = () => {
-  const [showSpecialties, setShowSpecialties] = useState(false);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const quickLinks = [
@@ -17,7 +16,7 @@ const Home: React.FC = () => {
       path: "/emergencia",
     },
     {
-      title: "Calculadoras Gerais",
+      title: "Calculadora Geral",
       path: "/calculadora",
     },
   ];
@@ -83,37 +82,13 @@ const Home: React.FC = () => {
             <span className="text-lg font-bold text-white">{link.title}</span>
           </Link>
         ))}
+        <Link
+          to="/medicamentos"
+          className="block w-full p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200"
+        >
+          <span className="text-lg font-bold text-white">Medicamentos</span>
+        </Link>
       </div>
-
-      {/* Especialidades Collapsible */}
-      <button
-        onClick={() => setShowSpecialties(!showSpecialties)}
-        className="w-full p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all flex items-center justify-between"
-      >
-        <div className="flex items-center gap-3">
-          <ICONS.FileText size={20} className="text-white/70" />
-          <span className="text-lg font-bold">Especialidades</span>
-        </div>
-        <ICONS.ChevronDown
-          size={20}
-          className={`text-white/50 transition-transform duration-300 ${showSpecialties ? "rotate-180" : ""}`}
-        />
-      </button>
-
-      {showSpecialties && (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 animate-in slide-in-from-top-2 duration-300">
-          {specialties.map((spec) => (
-            <div
-              key={spec.name}
-              onClick={() => setShowPremiumModal(true)}
-              className="flex flex-col items-center gap-2 p-4 bg-white/5 rounded-xl hover:bg-white/10 cursor-pointer border border-white/5 transition-all active:scale-95"
-            >
-              <span className="text-2xl">{spec.icon}</span>
-              <span className="text-xs font-bold text-center">{spec.name}</span>
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Card Intermediário com Favorito */}
       <div

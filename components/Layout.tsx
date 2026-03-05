@@ -20,19 +20,19 @@ const Layout: React.FC<LayoutProps> = ({ onLogout }) => {
       icon: <ICONS.HeartPulse size={18} />,
     },
     {
-      label: "Calculadora Emergência",
+      label: "Calculadora de Emergência",
       path: "/emergencia",
       icon: <ICONS.Calculator size={18} />,
     },
     {
-      label: "Medicamentos",
-      path: "/medicamentos",
-      icon: <ICONS.Pill size={18} />,
-    },
-    {
-      label: "Calculadoras Gerais",
+      label: "Calculadora Geral",
       path: "/calculadora",
       icon: <ICONS.Calculator size={18} />,
+    },
+    {
+      label: "Especialidades",
+      path: "/especialidades",
+      icon: <ICONS.FileText size={18} />,
     },
   ];
 
