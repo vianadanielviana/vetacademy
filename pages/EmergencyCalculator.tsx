@@ -281,7 +281,7 @@ const EmergencyCalculator: React.FC = () => {
     const minVol = minDose / drug.concentration;
     const maxVol = maxDose / drug.concentration;
     const isInfusion = drug.dosageRange.unit === "mcg/kg/min";
-    const decimals = isInfusion ? 4 : 2;
+    const decimals = isInfusion ? 3 : 2;
     return {
       minResult: minVol,
       maxResult: maxVol,
