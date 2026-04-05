@@ -10,6 +10,7 @@ import EmergencyCalculator from "./pages/EmergencyCalculator";
 import Medications from "./pages/Medications";
 import Calculator from "./pages/Calculator";
 import Content from "./pages/Content";
+import Especialidades from "./pages/Especialidades";
 import Auth from "./pages/Auth";
 
 // Setup screen when .env.local is missing
@@ -92,6 +93,7 @@ const App: React.FC = () => {
             <Route path="/medicamentos" element={<Medications />} />
             <Route path="/calculadora" element={<Calculator />} />
             <Route path="/conteudo" element={<Content />} />
+            <Route path="/especialidades" element={<Especialidades />} />
             <Route
               path="/calc"
               element={

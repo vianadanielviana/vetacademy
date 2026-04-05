@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ICONS } from "../constants";
+import { supabase, Medication } from "../lib/supabase";
 
 const Calculator: React.FC = () => {
   const [weight, setWeight] = useState("");
@@ -7,10 +8,75 @@ const Calculator: React.FC = () => {
   const [dosage, setDosage] = useState("");
   const [result, setResult] = useState<number | null>(null);
 
+  // Autocomplete
+  const [medications, setMedications] = useState<Medication[]>([]);
+  const [suggestions, setSuggestions] = useState<Medication[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedMed, setSelectedMed] = useState<Medication | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
+
+  // Buscar todos os medicamentos do Supabase ao montar
+  useEffect(() => {
+    const fetchMedications = async () => {
+      const { data, error } = await supabase
+        .from("medications_")
+        .select("*")
+        .order("name");
+      if (!error && data) {
+        setMedications(data as Medication[]);
+      }
+    };
+    fetchMedications();
+  }, []);
+
+  // Filtrar sugestões conforme digitação
+  useEffect(() => {
+    if (medication.trim().length === 0) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+    const filtered = medications.filter((m) =>
+      m.name.toLowerCase().includes(medication.toLowerCase())
+    );
+    setSuggestions(filtered.slice(0, 8));
+    setShowSuggestions(filtered.length > 0);
+  }, [medication, medications]);
+
+  // Fechar dropdown ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(e.target as Node) &&
+        inputRef.current &&
+        !inputRef.current.contains(e.target as Node)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSelectMedication = (med: Medication) => {
+    setMedication(med.name);
+    setSelectedMed(med);
+    setShowSuggestions(false);
+  };
+
+  const handleMedicationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMedication(e.target.value);
+    // Se o usuário editar manualmente, limpar seleção
+    if (selectedMed && e.target.value !== selectedMed.name) {
+      setSelectedMed(null);
+    }
+  };
+
   const calculateDosage = () => {
     const weightNum = parseFloat(weight);
     const dosageNum = parseFloat(dosage);
-
     if (weightNum > 0 && dosageNum > 0) {
       setResult(weightNum * dosageNum);
     }
@@ -21,8 +87,10 @@ const Calculator: React.FC = () => {
     setMedication("");
     setDosage("");
     setResult(null);
+    setSelectedMed(null);
+    setSuggestions([]);
+    setShowSuggestions(false);
   };
-
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-10">
@@ -44,18 +112,49 @@ const Calculator: React.FC = () => {
         </h2>
 
         <div className="space-y-5">
-          {/* Medication Name */}
+          {/* Medication Name com Autocomplete */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-white/70 uppercase tracking-wider">
               Nome do Medicamento
             </label>
-            <input
-              type="text"
-              value={medication}
-              onChange={(e) => setMedication(e.target.value)}
-              placeholder="Ex: Meloxicam, Dipirona..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-5 outline-none focus:ring-2 ring-purple-500/50 transition-all text-base placeholder:text-white/30"
-            />
+            <div className="relative">
+              <input
+                ref={inputRef}
+                type="text"
+                value={medication}
+                onChange={handleMedicationChange}
+                onFocus={() => {
+                  if (suggestions.length > 0) setShowSuggestions(true);
+                }}
+                placeholder="Ex: Meloxicam, Dipirona..."
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-5 outline-none focus:ring-2 ring-purple-500/50 transition-all text-base placeholder:text-white/30"
+                autoComplete="off"
+              />
+              {/* Dropdown de sugestões */}
+              {showSuggestions && (
+                <div
+                  ref={suggestionsRef}
+                  className="absolute left-0 right-0 top-full mt-1 z-50 bg-[hsl(270,40%,14%)] border border-white/10 rounded-xl shadow-2xl overflow-hidden"
+                >
+                  {suggestions.map((med) => (
+                    <button
+                      key={med.id}
+                      type="button"
+                      onMouseDown={() => handleSelectMedication(med)}
+                      className="w-full text-left px-5 py-3 hover:bg-purple-500/20 transition-colors flex items-center justify-between group border-b border-white/5 last:border-b-0"
+                    >
+                      <div>
+                        <p className="font-bold text-sm text-white group-hover:text-purple-300 transition-colors">
+                          {med.name}
+                        </p>
+                        <p className="text-xs text-white/40">{med.category}</p>
+                      </div>
+                      <ICONS.ChevronRight size={14} className="text-white/20 group-hover:text-purple-400" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Weight */}
@@ -133,48 +232,75 @@ const Calculator: React.FC = () => {
         </section>
       )}
 
-      {/* Quick Reference */}
+      {/* Referência Rápida */}
       <section className="glass rounded-2xl p-6 border border-white/5">
         <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
           <ICONS.BookOpen size={20} className="text-purple-400" />
           Referência Rápida
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[
-            {
-              name: "Meloxicam",
-              dose: "0.1-0.2 mg/kg",
-              species: "Cães e Gatos",
-            },
-            { name: "Dipirona", dose: "25 mg/kg", species: "Cães e Gatos" },
-            {
-              name: "Amoxicilina",
-              dose: "10-20 mg/kg",
-              species: "Cães e Gatos",
-            },
-            {
-              name: "Enrofloxacina",
-              dose: "5-10 mg/kg",
-              species: "Cães e Gatos",
-            },
-          ].map((med, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors cursor-pointer group"
-              onClick={() => {
-                setMedication(med.name);
-              }}
-            >
+
+        {selectedMed ? (
+          /* Dados do medicamento selecionado */
+          <div className="space-y-4 animate-in fade-in duration-300">
+            <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="font-bold text-sm">{med.name}</p>
-                <p className="text-xs text-muted-foreground">{med.species}</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-purple-400">{med.dose}</p>
+                <h3 className="text-xl font-black text-white">{selectedMed.name}</h3>
+                <span className="inline-block mt-1 px-2 py-1 bg-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-widest rounded">
+                  {selectedMed.category}
+                </span>
               </div>
             </div>
-          ))}
-        </div>
+
+            {selectedMed.indication && (
+              <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                <p className="text-xs font-black text-purple-400 uppercase tracking-widest mb-1">
+                  Indicação
+                </p>
+                <p className="text-sm text-white/80 leading-relaxed">
+                  {selectedMed.indication}
+                </p>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-xl border-l-4 border-blue-500 bg-blue-500/5">
+                <p className="text-xs font-black text-blue-300 uppercase tracking-widest mb-2">
+                  Cães
+                </p>
+                <p className="text-sm text-white/80 leading-relaxed">
+                  {selectedMed.dosagedog || "Não disponível"}
+                </p>
+              </div>
+              <div className="p-4 rounded-xl border-l-4 border-pink-500 bg-pink-500/5">
+                <p className="text-xs font-black text-pink-300 uppercase tracking-widest mb-2">
+                  Gatos
+                </p>
+                <p className="text-sm text-white/80 leading-relaxed">
+                  {selectedMed.dosagecat || "Não disponível"}
+                </p>
+              </div>
+            </div>
+
+            {selectedMed.notes && (
+              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <p className="text-xs font-black text-amber-400 uppercase tracking-widest mb-1 flex items-center gap-2">
+                  <ICONS.Activity size={12} /> Observações Clínicas
+                </p>
+                <p className="text-sm text-amber-200/80 leading-relaxed">
+                  {selectedMed.notes}
+                </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          /* Estado vazio — sem medicamento selecionado */
+          <div className="text-center py-10 text-white/30">
+            <ICONS.Search size={36} className="mx-auto mb-3 opacity-40" />
+            <p className="text-sm font-medium">
+              Digite o nome de um medicamento acima para ver as informações de referência.
+            </p>
+          </div>
+        )}
       </section>
     </div>
   );
