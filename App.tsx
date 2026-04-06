@@ -4,6 +4,7 @@ import { useAuth } from "./lib/useAuth";
 import { isMissingCredentials } from "./lib/supabase";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Layout from "./components/Layout";
+import UpdateNotification from "./components/UpdateNotification";
 import Home from "./pages/Home";
 import CPRPage from "./pages/CPRPage";
 import EmergencyCalculator from "./pages/EmergencyCalculator";
@@ -69,6 +70,7 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
+      <UpdateNotification />
       <HashRouter>
         <Routes>
           {/* Auth route - redirect to home if already authenticated */}
